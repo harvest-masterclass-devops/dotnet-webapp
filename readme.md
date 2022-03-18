@@ -4,10 +4,8 @@ Basic approach on running some code in a container
 
 ```
 docker build . -t simple-container
-docker run --name simple-instance -p 9006:80 simple-container testje
+docker run --name simple-instance -it -p 9006:80 simple-container
 ```
-
-For some reason I can't exit the docker process with `ctrl+c` in my windows terminal, I'm killing the process from the GUI.
 
 ## Building really locally
 
