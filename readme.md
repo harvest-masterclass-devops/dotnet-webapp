@@ -1,4 +1,4 @@
-Basic approach on running some code in a container
+# Basic approach on running some code in a container
 
 ## Steps
 
@@ -7,9 +7,9 @@ docker build . -t simple-container
 docker run --name simple-instance -it -p 9006:80 simple-container
 ```
 
-## Building really locally
+## Building locally (optional)
 
-You will need the dotnet stuff to really build locally.
+You will dotnet to build locally.
 
 * `dotnet --version` should return at least `6.0.201`
   * You can install by `choco install dotnet-sdk` (or [download](https://dotnet.microsoft.com/en-us/download) it)
