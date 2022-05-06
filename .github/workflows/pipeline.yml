@@ -62,6 +62,7 @@ jobs:
           starttime = $startTimeParsed
           endtime = $endTimeParsed
           totalSeconds = $totalSeconds
+          inputValue = "${{inputs.someTest}}"
         }
 
         Invoke-RestMethod -Method 'Post' -Uri '${{Env.READY_URL}}' -Body $body
