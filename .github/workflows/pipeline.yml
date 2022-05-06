@@ -6,13 +6,14 @@ on:
   workflow_dispatch:
     inputs:
       someTest:
-        description: 'Some test value'     
+        description: 'Some test value'
         required: true
         default: 'defaultValue'
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  READY_URL: https://webhook.site/8741704d-b2a4-4fab-b47b-1086afec814f
 
 jobs:
   build:
@@ -53,7 +54,7 @@ jobs:
     - name: Push stop stoptime and diff
       shell: pwsh
       run: |
-        $startTimeParsed = [DateTime]'${Env:START_TIME}'
+        $startTimeParsed = [DateTime]'${{Env:START_TIME}}'
         $endTimeParsed = Get-Date
         $totalSeconds = ($endTimeParsed-$startTimeParsed).TotalSeconds
         $body = @{
@@ -62,4 +63,4 @@ jobs:
           totalSeconds = $totalSeconds
         }
 
-        Invoke-RestMethod -Method 'Post' -Uri '${{parameters.readyUrl}}' -Body $body
+        Invoke-RestMethod -Method 'Post' -Uri '${{Env:READY_URL}}' -Body $body
