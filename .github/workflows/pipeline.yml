@@ -23,7 +23,7 @@ jobs:
     - name: Set start time
       shell: pwsh
       run: |
-        echo "START_TIME='$(Get-Date)'" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+        echo "START_TIME=$(Get-Date)" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
   
     - name: Checkout repository 🔎
       uses: actions/checkout@v2
