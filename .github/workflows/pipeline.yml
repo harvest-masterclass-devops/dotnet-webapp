@@ -11,6 +11,10 @@ on:
         description: 'Some test value'
         required: true
         default: 'defaultValue'
+      kickoffTime:
+        description: The actual time that the race started
+        required: true
+        default: "Friday, May 6, 2022 1:00:00 PM"
 
 env:
   REGISTRY: ghcr.io
@@ -56,13 +60,22 @@ jobs:
     - name: Push stop stoptime and diff
       shell: pwsh
       run: |
+        $kickoffTimeParsed = "Friday, May 6, 2022 1:00:00 PM"
+        if ("${{github.event.inputs.kickoffTime}}".length -gt 0)
+        {
+          $kickoffTimeParsed = [DateTime]"${{github.event.inputs.kickoffTime}}"
+        }
+        
         $startTimeParsed = [DateTime]${Env:START_TIME}
         $endTimeParsed = Get-Date
-        $totalSeconds = ($endTimeParsed-$startTimeParsed).TotalSeconds
+        $stepsSeconds = ($endTimeParsed-$startTimeParsed).TotalSeconds
+        $totalSeconds = ($endTimeParsed-$kickoffTimeParsed).TotalSeconds
         $body = @{
           source = 'Github Actions'
-          starttime = $startTimeParsed
-          endtime = $endTimeParsed
+          kickoffTime = $kickoffTimeParsed
+          startTime = $startTimeParsed
+          endTime = $endTimeParsed
+          stepsSeconds = $stepsSeconds
           totalSeconds = $totalSeconds
           inputValue = '${{github.event.inputs.someTest}}'
         }
