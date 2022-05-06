@@ -64,7 +64,7 @@ jobs:
           starttime = $startTimeParsed
           endtime = $endTimeParsed
           totalSeconds = $totalSeconds
-          inputValue = '${{github.event.inputs.someTest}}''
+          inputValue = '${{github.event.inputs.someTest}}'
         }
 
         Invoke-RestMethod -Method 'Post' -Uri '${{Env.READY_URL}}' -Body $body
