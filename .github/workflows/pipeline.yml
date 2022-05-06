@@ -55,7 +55,7 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "Yes we are reading back: ${Env:START_TIME}"
-        $startTimeParsed = [DateTime]'${Env:START_TIME}'
+        $startTimeParsed = [DateTime]${Env:START_TIME}
         $endTimeParsed = Get-Date
         $totalSeconds = ($endTimeParsed-$startTimeParsed).TotalSeconds
         $body = @{
