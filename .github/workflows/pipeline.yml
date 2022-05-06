@@ -3,6 +3,8 @@ on:
   push:
     branches:
     - master
+  # This means that you can run it by yourself
+  # gh workflow run pipeline.yml -f someTest=simonstest
   workflow_dispatch:
     inputs:
       someTest:
@@ -62,7 +64,7 @@ jobs:
           starttime = $startTimeParsed
           endtime = $endTimeParsed
           totalSeconds = $totalSeconds
-          inputValue = "${{inputs.someTest}}"
+          inputValue = '${{github.event.inputs.someTest}}''
         }
 
         Invoke-RestMethod -Method 'Post' -Uri '${{Env.READY_URL}}' -Body $body
