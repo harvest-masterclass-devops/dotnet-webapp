@@ -54,7 +54,7 @@ jobs:
     - name: Push stop stoptime and diff
       shell: pwsh
       run: |
-        $startTimeParsed = [DateTime]'${{Env:START_TIME}}'
+        $startTimeParsed = [DateTime]'${Env:START_TIME}'
         $endTimeParsed = Get-Date
         $totalSeconds = ($endTimeParsed-$startTimeParsed).TotalSeconds
         $body = @{
