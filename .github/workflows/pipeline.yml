@@ -1,5 +1,14 @@
 name: Create simple-container
-on: [push]
+on: 
+  push:
+    branches:
+    - master
+  workflow_dispatch:
+    inputs:
+      someTest:
+        description: 'Some test value'     
+        required: true
+        default: 'defaultValue'
 
 env:
   REGISTRY: ghcr.io
@@ -9,11 +18,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    #https://github.community/t/pass-variable-into-step-using-powershell/141423/2
+    - name: Set start time
+      shell: pwsh
+      run: |
+        echo "START_TIME=$(Get-Date)" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+  
     - name: Checkout repository 🔎
       uses: actions/checkout@v2
       with:
         submodules: 'true'
-    
+
     - name: Log in to the Container registry
       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
       with:
@@ -34,3 +49,17 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+
+    - name: Push stop stoptime and diff
+      shell: pwsh
+      run: |
+        $startTimeParsed = [DateTime]'${Env:START_TIME}'
+        $endTimeParsed = Get-Date
+        $totalSeconds = ($endTimeParsed-$startTimeParsed).TotalSeconds
+        $body = @{
+          starttime = $startTimeParsed
+          endtime = $endTimeParsed
+          totalSeconds = $totalSeconds
+        }
+
+        Invoke-RestMethod -Method 'Post' -Uri '${{parameters.readyUrl}}' -Body $body
