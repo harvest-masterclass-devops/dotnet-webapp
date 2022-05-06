@@ -63,4 +63,4 @@ jobs:
           totalSeconds = $totalSeconds
         }
 
-        Invoke-RestMethod -Method 'Post' -Uri '${{Env:READY_URL}}' -Body $body
+        Invoke-RestMethod -Method 'Post' -Uri '${{Env.READY_URL}}' -Body $body
