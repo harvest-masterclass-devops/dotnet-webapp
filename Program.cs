@@ -7,6 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+Meter myMeter = new("MyCompany.MyProduct.MyLibrary", "1.0");    
+builder.Services.AddOpenTelemetry()
+    .WithMetrics(builder => builder
+        .AddMeter("MyCompany.MyProduct.MyLibrary")
+        .AddPrometheusExporter());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,25 +31,18 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+// http://localhost:9006/metrics
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 
-Meter MyMeter = new("MyCompany.MyProduct.MyLibrary", "1.0");
-Counter<long> MyFruitCounter = MyMeter.CreateCounter<long>("MyFruitCounter");
+Counter<long> MyFruitCounter = myMeter.CreateCounter<long>("MyFruitCounter");
 
 // http://localhost:9006/add/apple/purple
-app.MapGet("/add/{fruit}/{color}", async  (string fruit, string color) =>
+app.MapGet("/add/{fruit}/{color}", (string fruit, string color) =>
 {
     MyFruitCounter.Add(1, new("name", fruit), new("color", color));
     return "increased";
 });
-
-using var meterProvider = Sdk.CreateMeterProviderBuilder()
-       .AddMeter("MyCompany.MyProduct.MyLibrary")
-        .AddPrometheusExporter(options => { options.StartHttpListener = true; })
-       .Build();
-
-// http://localhost:9006/metrics
-app.UseOpenTelemetryPrometheusScrapingEndpoint(meterProvider);
 
 MyFruitCounter.Add(1, new("name", "apple"), new("color", "red"));
 MyFruitCounter.Add(2, new("name", "lemon"), new("color", "yellow"));
