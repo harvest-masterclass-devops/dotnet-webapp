@@ -1,0 +1,5 @@
+hostname: harvest.viya.me
+image:
+  repository: ghcr.io/harvest-masterclass-devops/dotnet-webapp
+  tag: main
+  imagePullPolicy: Always

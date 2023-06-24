@@ -1,0 +1,17 @@
+# Allow access to all these deployed pods, they are selected by the selector stuff. Only healthy pods will receive traffic. 
+# You can create a brige into any service with `kubectl port-forward`: this will make it avaialble on some port as if it was running on your own pc.
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-webapp
+  labels:
+    app.kubernetes.io/name: dotnet-webapp
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: dotnet-webapp

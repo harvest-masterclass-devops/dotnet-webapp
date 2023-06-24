@@ -1,0 +1,26 @@
+# Forward incomming network traffic towards a service
+# Under the hood it's adjusting the configuration of nginx.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dotnet-webapp
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: harvest.viya.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            name: dotnet-webapp
+            port:
+              name: http
+  tls:
+  - hosts:
+    - harvest.viya.me
+    secretName: tls-ingress
