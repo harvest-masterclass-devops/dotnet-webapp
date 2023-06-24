@@ -14,6 +14,6 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-
+        ViewData["ExampleVar"] = Environment.GetEnvironmentVariable("EXAMPLE_VAR");
     }
 }
