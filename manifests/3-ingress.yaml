@@ -23,4 +23,4 @@ spec:
   tls:
   - hosts:
     - harvest.viya.me
-    secretName: tls-ingress
+    secretName: tls-harvest-viya-me
