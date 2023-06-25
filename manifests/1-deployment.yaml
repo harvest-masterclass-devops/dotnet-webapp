@@ -21,7 +21,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: EXAMPLE_VAR
-          value: "Some value inserted by an environment value"
+          value: "Some value set in manifests/1-deployment.yaml line 24"
         ports:
         - name: http
           containerPort: 80
@@ -29,7 +29,7 @@ spec:
         resources:
           limits:
             memory: 256Mi
-            cpu: 500m
+            cpu: 100m  # This is 0.1 cpu core (https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu)
           requests:
             memory: 32Mi
             cpu: 5m
