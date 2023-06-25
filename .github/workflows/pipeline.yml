@@ -1,5 +1,9 @@
 name: Create simple-container
-on: [push]
+on: 
+  push:
+    paths:
+    - src/**
+    - Dockerfile
 
 env:
   REGISTRY: ghcr.io
