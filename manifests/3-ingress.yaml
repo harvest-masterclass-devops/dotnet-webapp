@@ -13,7 +13,7 @@ spec:
   - host: harvest.viya.me
     http:
       paths:
-      - path: /
+      - path: /some-dotnet-subpath
         pathType: Prefix
         backend:
           service: 

@@ -16,6 +16,11 @@ You will dotnet to build locally.
   * `choco list --localonly` to show your locally installed stuff
 * Make sure you switch your docker to 'linux containers' mode (in the context menu).
 
+## Installing
+
+* `/manifests` contains a minimal example to get this running.
+* `/helm-chart` contains a chart that allows you to tweak the installation because the most important values are templated.
+
 # Resources
 
 * https://dev.to/mcklmt/build-and-deploy-net-5-app-with-github-actions-1de

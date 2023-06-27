@@ -1,4 +1,5 @@
 hostname: harvest.viya.me
+path: /
 image:
   repository: ghcr.io/harvest-masterclass-devops/dotnet-webapp
   tag: main
