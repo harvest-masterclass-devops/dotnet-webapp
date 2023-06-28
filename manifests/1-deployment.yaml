@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: dotnet-webapp
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app.kubernetes.io/name: dotnet-webapp
@@ -21,7 +21,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: EXAMPLE_VAR
-          value: "Some value set in manifests/1-deployment.yaml line 24"
+          value: "Simon was here"
         ports:
         - name: http
           containerPort: 80
