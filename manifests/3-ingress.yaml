@@ -10,10 +10,10 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: harvest.viya.me
+  - host: g.harvest.viya.me
     http:
       paths:
-      - path: /some-dotnet-subpath
+      - path: /
         pathType: Prefix
         backend:
           service: 
@@ -22,5 +22,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - harvest.viya.me
+    - g.harvest.viya.me
     secretName: tls-harvest-viya-me
